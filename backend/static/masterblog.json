@@ -1,0 +1,134 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Masterblog API",
+    "version": "1.0.0"
+  },
+  "servers": [{ "url": "http://localhost:5002" }],
+  "tags": [{ "name": "Post", "description": "Post API - CRUD" }],
+  "paths": {
+    "/api/posts": {
+      "get": {
+        "summary": "Returns all posts",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to sort by (title or content)",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "direction",
+            "in": "query",
+            "description": "Sort direction (asc or desc)",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successful operation" }
+        }
+      },
+      "post": {
+        "summary": "Add a new post",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Post object to be added",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "content": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": { "description": "Post created successfully" },
+          "400": { "description": "Missing fields" }
+        }
+      }
+    },
+    "/api/posts/{id}": {
+      "delete": {
+        "summary": "Delete a post by ID",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Post deleted successfully" },
+          "404": { "description": "Post not found" }
+        }
+      },
+      "put": {
+        "summary": "Update a post by ID",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Updated post object",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": { "type": "string" },
+                "content": { "type": "string" }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Post updated successfully" },
+          "404": { "description": "Post not found" }
+        }
+      }
+    },
+    "/api/posts/search": {
+      "get": {
+        "summary": "Search posts by title or content",
+        "produces": ["application/json"],
+        "tags": ["Post"],
+        "parameters": [
+          {
+            "name": "title",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "content",
+            "in": "query",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": { "description": "Successful operation" }
+        }
+      }
+    }
+  }
+}
